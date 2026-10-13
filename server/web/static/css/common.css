@@ -12,5 +12,6 @@
 @import url("tooltip.css");  /* 장비 툴팁 */
 @import url("accent-font.css");  /* 메이플스토리체를 쓰는 곳 (제목·큰 금액·타이머) */
 @import url("changelog.css");  /* 버전 표시 · 업데이트 내역 · 로고 링크 */
+@import url("install.css");  /* 앱 설치 버튼 · 설치 안내 */
 @import url("menu.css");  /* 메뉴: 데스크톱 가로 / 앱 오른쪽 서랍 */
 @import url("mobile.css");  /* 앱(좁은 화면): 표를 카드로 · 타일·폼 크기 */

@@ -1,0 +1,17 @@
+{
+  "name": "메이플 수익 장부",
+  "short_name": "수익 장부",
+  "description": "보스 결정석·사냥·기타 수익과 강화 지출을 기록하는 메이플스토리 장부",
+  "lang": "ko",
+  "start_url": "/#dash",
+  "scope": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#fff7ef",
+  "theme_color": "#ff7a3d",
+  "icons": [
+    { "src": "/static/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/static/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/static/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

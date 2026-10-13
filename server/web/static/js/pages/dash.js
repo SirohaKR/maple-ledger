@@ -23,8 +23,8 @@ async function dash(el) {
         ${s.pending.count ? `<div class="small muted">미판매 ${s.pending.count}건 · 예상 ${fmt(s.pending.amount)}</div>` : ""}</div>
     </div>
     <div class="card">
-      <div class="row spread"><h3>주간 수익 · 최근 12주 합계 <span style="color:var(--accent)">${fmt(sum("boss") + sum("hunt") + sum("etc") + sumMonthly)}</span>
-        <span class="small muted">지출 ${fmt(sum("spend"))} · 순수익 ${fmt(sum("boss") + sum("hunt") + sum("etc") + sumMonthly - sum("spend"))}</span></h3>
+      <div class="row spread"><h3>주간 수익 · 최근 12주 합계 <span style="color:var(--accent)">${fmt(sum("boss") + sum("hunt") + sum("etc"))}</span>
+        <span class="small muted">지출 ${fmt(sum("spend"))} · 순수익 ${fmt(sum("boss") + sum("hunt") + sum("etc") - sum("spend"))} · 월간 보스 ${fmt(sumMonthly)} 별도</span></h3>
         <div class="legend"><span><i style="background:var(--boss)"></i>보스</span><span><i style="background:var(--hunt)"></i>사냥</span><span><i style="background:var(--etc)"></i>기타</span></div></div>
       ${barChart(s.series)}
     </div>

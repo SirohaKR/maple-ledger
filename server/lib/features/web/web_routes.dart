@@ -26,6 +26,15 @@ class WebRoutes {
   void register(Router r) {
     r.get('/', _index);
     r.get('/static/<path|.*>', _file);
+    // 앱으로 설치: 설치 정보와 서비스 워커 (서비스 워커는 맨 앞 주소에 있어야 전체 화면을 맡을 수 있다)
+    r.get('/manifest.webmanifest', (Request req) => _root('manifest.webmanifest', 'application/manifest+json'));
+    r.get('/sw.js', (Request req) => _root('sw.js', 'text/javascript; charset=utf-8'));
+  }
+
+  Response _root(String name, String type) {
+    final f = File(p.join(dir, name));
+    if (!f.existsSync()) return Response.notFound('');
+    return Response.ok(f.readAsBytesSync(), headers: {'content-type': type, 'cache-control': 'no-cache'});
   }
 
   Response _index(Request req) {

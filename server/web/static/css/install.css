@@ -1,0 +1,11 @@
+/* 앱 설치 버튼 · 설치 안내 */
+.install-btn { border-radius: 999px; padding: 7px 12px; font-weight: 600; display: inline-flex; gap: 6px; align-items: center; }
+.install-btn[hidden] { display: none !important; }
+body.logged-out .top > .install-btn { display: none; }
+#modal-box ol { margin: 8px 0 12px; padding-left: 20px; line-height: 1.7; }
+#modal-box code { padding: 1px 6px; border-radius: 6px; background: var(--accent-soft); }
+
+@media (max-width: 960px) {
+  .top > .install-btn { display: none; } /* 폰에서는 메뉴 서랍 안에 있음 */
+  .drawer-foot .install-btn { width: 100%; justify-content: center; }
+}
