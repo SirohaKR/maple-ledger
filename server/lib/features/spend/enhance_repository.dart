@@ -48,6 +48,15 @@ class EnhanceRepository {
           if (r['character_name'] != null && r['character_name'] != '') r['character_name'] as String,
       };
 
+  /// 모든 스타포스 기록 (특이사항 다시 읽기용).
+  List<Row> searchStarforceRaw() => db.rows("SELECT id, sub, raw FROM enhance_log WHERE kind = 'starforce'");
+
+  void setSub(String id, String? sub) => db.exec('UPDATE enhance_log SET sub = ? WHERE id = ?', [sub, id]);
+
+  /// 강화 기록이 있는 사람들.
+  List<int> userIds() =>
+      [for (final r in db.rows('SELECT DISTINCT user_id FROM enhance_log WHERE user_id IS NOT NULL')) r['user_id'] as int];
+
   // ── 이미 받아온 날짜 ──
   Set<(String, String)> doneDays(int uid) =>
       {for (final r in db.rows('SELECT kind, date FROM history_days WHERE user_id = ?', [uid])) (r['kind'] as String, r['date'] as String)};

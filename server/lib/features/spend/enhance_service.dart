@@ -12,15 +12,26 @@ import '../characters/characters_repository.dart';
 import '../growth/equipment_service.dart';
 import 'enhance_repository.dart';
 
-/// '파괴 방지 적용' / '파괴 방지 미적용' / '슈페리얼 장비 아님' / true 같은 값을 참·거짓으로.
+/// '파괴 방지 적용' / '파괴 방지 미적용' / '슈페리얼 장비 미해당' / true 같은 값을 참·거짓으로.
 bool flagText(Object? v, [String word = '적용']) {
   final s = (v ?? '').toString().trim();
   final low = s.toLowerCase();
   if (const {'true', 'y', '1'}.contains(low)) return true;
-  if (s.isEmpty || const ['미적용', '아님', '없음', '미사용'].any(s.contains) || const {'false', 'n', '0'}.contains(low)) {
-    return false;
-  }
+  if (s.isEmpty || _noWords.any(s.contains) || const {'false', 'n', '0'}.contains(low)) return false;
   return s.contains(word);
+}
+
+/// 넥슨이 "아니다"를 적는 여러 말투 (예: 슈페리얼 장비 미해당, 찬스타임 미적용).
+const _noWords = ['미적용', '미해당', '해당 없음', '해당없음', '아님', '없음', '미사용'];
+
+/// 스타포스 기록의 특이사항(주문서·슈페리얼·찬스 타임). 비어 있으면 일반 강화라 비용을 계산한다.
+String? starforceSub(Map r) {
+  final notes = [
+    if (truthy(r['upgrade_item'])) '${r['upgrade_item']}',
+    if (flagText(r['superior_item_flag'], '슈페리얼')) '슈페리얼',
+    if (flagText(r['chance_time'], '찬스')) '찬스 타임',
+  ];
+  return notes.isEmpty ? null : notes.join(', ');
 }
 
 class EnhanceService {
@@ -64,12 +75,7 @@ class EnhanceService {
       row['before_star'] = r['before_starforce_count'];
       row['after_star'] = r['after_starforce_count'];
       row['destroy_defence'] = flagText(r['destroy_defence']) ? 1 : 0;
-      final notes = [
-        if (truthy(r['upgrade_item'])) '${r['upgrade_item']}',
-        if (flagText(r['superior_item_flag'], '슈페리얼')) '슈페리얼',
-        if (flagText(r['chance_time'], '찬스')) '찬스 타임',
-      ];
-      row['sub'] = notes.isEmpty ? null : notes.join(', ');
+      row['sub'] = starforceSub(r);
     } else {
       final additional = '${r['potential_type'] ?? ''}'.contains('에디셔널');
       row['sub'] = kind == 'potential' ? r['potential_type'] : r['cube_type'];
@@ -99,6 +105,28 @@ class EnhanceService {
             additional: (sub ?? '').contains('에디셔널'));
       }
       if (cost != null) repo.setCost(r['id'] as String, cost);
+    }
+  }
+
+  /// 서버 켤 때: 예전에 잘못 읽은 특이사항을 한 번 고치고(슈페리얼 장비 "미해당"을 슈페리얼로 읽던 것),
+  /// 비어 있는 비용을 모두 다시 계산한다.
+  void repairOnStart() {
+    if (settings.global('enhance_sub_fix_v1') == null) {
+      var fixed = 0;
+      for (final r in repo.searchStarforceRaw()) {
+        final raw = jsonDecode((r['raw'] as String?) ?? '{}');
+        if (raw is! Map) continue;
+        final sub = starforceSub(raw);
+        if (sub != r['sub']) {
+          repo.setSub(r['id'] as String, sub);
+          fixed++;
+        }
+      }
+      settings.set(null, 'enhance_sub_fix_v1', '1');
+      if (fixed > 0) print('[enhance] 스타포스 특이사항 $fixed건 다시 읽음');
+    }
+    for (final uid in repo.userIds()) {
+      price(uid);
     }
   }
 

@@ -26,6 +26,7 @@ import 'features/notices/notices_routes.dart';
 import 'features/notices/notices_schema.dart';
 import 'features/settings/settings_routes.dart';
 import 'features/settings/settings_schema.dart';
+import 'features/spend/enhance_service.dart';
 import 'features/spend/spend_routes.dart';
 import 'features/spend/spend_schema.dart';
 import 'features/stats/stats_routes.dart';
@@ -57,6 +58,7 @@ final allSchemas = [
 /// DB 준비 + API 주소 등록 → 요청을 처리하는 핸들러.
 Handler buildApp(AppContext app) {
   applySchemas(app.db, allSchemas);
+  EnhanceService(app).repairOnStart(); // 강화 비용 빈칸 다시 계산
 
   final router = Router();
   for (final routes in [
