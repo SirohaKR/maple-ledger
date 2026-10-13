@@ -1,4 +1,4 @@
-# 🍁 메이플 수익 장부 (maple-ledger-dart)
+# 🍁 메이플 수익 장부 (maple-ledger)
 
 메이플스토리 **보스 결정석 수익, 사냥 메소, 기타 수익, 강화 지출**을 한곳에 기록하는 웹 장부예요.
 [넥슨 오픈 API](https://openapi.nexon.com/)로 캐릭터 정보와 보스 클리어 여부를 불러와서, 손으로 적어야 할 것을 줄여 줘요.
@@ -31,11 +31,11 @@
 Git이 있으면:
 
 ```bash
-git clone https://github.com/SirohaKR/maple-ledger-dart.git
+git clone https://github.com/SirohaKR/maple-ledger.git
 ```
 
 ```bash
-cd maple-ledger-dart
+cd maple-ledger
 ```
 
 Git이 없으면 이 페이지 위쪽의 **Code → Download ZIP**으로 받아서 압축을 풀고, 그 폴더에서 터미널(PowerShell)을 열면 돼요.
