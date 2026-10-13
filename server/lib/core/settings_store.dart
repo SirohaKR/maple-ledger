@@ -50,17 +50,22 @@ class SettingsStore {
 
   String apiKey(int uid) => get(uid, 'nexon_api_key') ?? '';
 
-  /// 장부 시작일 (기본: 가입한 날). 통계의 지출은 이 날부터만 센다.
-  /// 단, [spendCountFrom]보다 앞으로는 못 간다 (그 전 강화 기록은 장부와 상관없어서).
+  /// 장부 시작일. 통계의 지출은 이 날부터만 센다.
+  /// 직접 정하지 않았으면: 정식 버전 전에 가입한 사람은 [spendCountFrom], 그 뒤 가입한 사람은 가입한 날
+  /// (가입 전 강화 기록이 지출에 섞이지 않게). 어느 경우든 [spendCountFrom]보다 앞으로는 못 간다.
   String ledgerStart(int uid) {
     var v = get(uid, 'ledger_start') ?? '';
     if (v.isEmpty) {
       final created = db.scalar('SELECT created_at FROM users WHERE id = ?', [uid]) as String? ?? '';
-      v = created.length >= 10 ? created.substring(0, 10) : created;
+      final joined = created.length >= 10 ? created.substring(0, 10) : created;
+      v = joined.compareTo(_launchDay) > 0 ? joined : spendCountFrom;
     }
     return v.compareTo(spendCountFrom) > 0 ? v : spendCountFrom;
   }
 }
 
 /// 대시보드 지출을 세기 시작하는 날 (모두 공통). 이 날 이전 강화 비용·지출은 통계에 안 들어간다.
-const spendCountFrom = '2026-10-13';
+const spendCountFrom = '2026-10-11';
+
+/// 정식 버전(v1.0) 날. 이 날까지 가입한 사람은 장부 시작일 기본값이 [spendCountFrom].
+const _launchDay = '2026-10-13';
