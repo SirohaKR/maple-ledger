@@ -96,7 +96,9 @@ class EnhanceService {
         if (sub == null || sub.isEmpty || sub == '찬스 타임') {
           // 주문서·슈페리얼은 메소 공식이 달라서 제외
           final raw = jsonDecode((r['raw'] as String?) ?? '{}') as Map;
-          cost = starforceCost(levels[r['target_item']], r['before_star'] as int?,
+          final item = r['target_item'] as String?;
+          // 벗어 둔 장비는 넥슨이 레벨을 안 알려 줘서 이름(세트)으로 추측
+          cost = starforceCost(levels[item] ?? guessItemLevel(item, levels), r['before_star'] as int?,
               destroyDefence: r['destroy_defence'] != 0, mvpDiscount: discount, events: raw['starforce_event_list'] as List?);
         }
       } else if (r['kind'] == 'potential') {

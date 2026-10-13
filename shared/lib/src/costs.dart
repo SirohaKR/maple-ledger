@@ -75,6 +75,33 @@ int? starforceCost(int? level, int? star,
   return cost.truncate();
 }
 
+// ───────── 장비 레벨 추측 ─────────
+// 넥슨 API는 지금 끼고 있는 장비만 알려 줘서, 벗어 둔 장비는 레벨을 모른다. 그럴 때 이름으로 추측한다.
+const Map<String, int> setLevels = {
+  '에테르넬': 250,
+  '제네시스': 200,
+  '아케인셰이드': 200,
+  '앱솔랩스': 160,
+  '하이네스': 150, '이글아이': 150, '트릭스터': 150, '파프니르': 150, // 루타비스
+};
+
+/// 이름 앞부분(세트 이름)으로 레벨 추측. 알려진 세트가 아니면 [known]에서 같은 세트 장비의 레벨을 빌려 온다
+/// (같은 세트 장비 레벨이 서로 다르면 모른다고 둔다).
+int? guessItemLevel(String? name, Map<String, int?> known) {
+  if (name == null || name.isEmpty) return null;
+  for (final e in setLevels.entries) {
+    if (name.startsWith(e.key)) return e.value;
+  }
+  final space = name.indexOf(' ');
+  if (space <= 0) return null;
+  final prefix = name.substring(0, space + 1);
+  final levels = {
+    for (final e in known.entries)
+      if (e.value != null && e.key != name && e.key.startsWith(prefix)) e.value!,
+  };
+  return levels.length == 1 ? levels.first : null;
+}
+
 // ───────── 잠재능력 재설정 (메소) ─────────
 // (레벨 하한, {등급: 1회 비용}) — 현재(사용 전) 등급 기준
 const List<(int, Map<String, int>)> potentialCosts = [
