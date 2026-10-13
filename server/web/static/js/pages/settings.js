@@ -40,7 +40,7 @@ async function settings(el) {
       <div class="form-grid">
         <label class="field">MVP·PC방 스타포스 할인(%)<input type="number" id="s-sfd" min="0" max="30" step="1" value="${esc(s.starforce_discount)}"></label>
         <label class="field">강화 기록 처음 불러올 일수<input type="number" id="s-bf" min="1" max="365" value="${esc(s.enhance_backfill_days)}"></label>
-        <label class="field">장부 시작일 (이 날 이전 지출은 통계에서 빼요)<input type="date" id="s-ls" value="${esc(s.ledger_start || "")}"></label>
+        <label class="field">장부 시작일 (이 날 이전 지출은 대시보드에서 빼요 · ${esc(s.spend_count_from || "")} 이전은 안 돼요)<input type="date" id="s-ls" min="${esc(s.spend_count_from || "")}" value="${esc(s.ledger_start || "")}"></label>
         <label class="field span2">공지 감시 단어 (쉼표로 구분${isAdmin() ? "" : " · 관리자만 변경"})<input id="s-kw" value="${esc(s.notice_keywords || "")}" placeholder="결정석, 스타포스" ${isAdmin() ? "" : "disabled"}></label>
         <button class="primary" id="s-misc-save">저장</button></div></div>
 

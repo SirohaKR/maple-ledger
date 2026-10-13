@@ -39,7 +39,9 @@ class SettingsRoutes {
     s['sync_result'] = sr == null || sr.isEmpty ? null : jsonDecode(sr);
     s['sync_running'] = SyncService.isRunning(uid);
     s['ledger_start'] = settings.ledgerStart(uid);
+    s['spend_count_from'] = spendCountFrom; // 장부 시작일은 이 날보다 앞으로 못 정함
     s.remove('invite_code');
+    s.remove('changelog_reset_v1');
     s['is_admin'] = ctx.isAdmin;
     return s;
   }
