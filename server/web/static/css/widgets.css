@@ -1,0 +1,85 @@
+/* 진행 막대 · 숙제 · 장비/스킬 아이콘 · 공지 · 로그인 · 앱 아이콘 */
+/* ── 공지 알림 */
+.card.alert { border-color: var(--warn); border-left: 4px solid var(--warn); }
+
+/* ── 진행 막대 */
+.bar { height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; margin: 5px 0 3px; }
+.bar > i { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+
+/* ── 숙제 */
+.todo { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.todo:last-child { border-bottom: none; }
+.todo .tick {
+  flex: none; width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--line);
+  display: grid; place-items: center; font-size: 12px; font-weight: 800; color: #fff;
+}
+.todo.done .tick { background: var(--ok); border-color: var(--ok); }
+.todo.done .todo-main > .row span:first-child { color: var(--muted); text-decoration: line-through; }
+.todo.done .bar > i { background: var(--ok); }
+.todo-main { flex: 1; min-width: 0; }
+
+/* ── 아이템·스킬 아이콘 (넥슨 API 이미지) */
+.item-icon {
+  flex: none; width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--input-bg); border: 2px solid var(--line);
+}
+.item-icon img { max-width: 36px; max-height: 36px; image-rendering: pixelated; }
+.item-icon.g-rare { border-color: #4a9eff; }
+.item-icon.g-epic { border-color: #a35cff; }
+.item-icon.g-unique { border-color: #f2b705; }
+.item-icon.g-legend { border-color: #2ec27e; }
+.g-rare-t { color: #4a9eff; font-weight: 700; }
+.g-epic-t { color: #a35cff; font-weight: 700; }
+.g-unique-t { color: #d99a00; font-weight: 700; }
+.g-legend-t { color: #2ec27e; font-weight: 700; }
+.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-grid, .core-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.item-card, .core {
+  display: flex; gap: 10px; align-items: center; padding: 10px; border-radius: 14px;
+  background: var(--input-bg); border: 1px solid var(--line);
+}
+.equip-grid { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
+.equip { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; border-radius: 12px; background: var(--input-bg); }
+.equip .item-icon { width: 52px; height: 52px; }
+.equip .item-icon img { max-width: 44px; max-height: 44px; }
+.equip .star { position: absolute; top: 4px; right: 4px; font-size: 10px; font-weight: 800; color: #f2b705; }
+.equip .small { max-width: 100%; color: var(--muted); }
+
+/* ── 캐릭터 고르기 */
+.char-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.char-tabs button { display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; font-weight: 600; }
+.char-tabs button .avatar { width: 32px; height: 32px; border-radius: 50%; }
+.char-tabs button.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+/* ── 보스 이미지 (직접 넣은 주소) */
+.boss-img { width: 28px; height: 28px; object-fit: contain; vertical-align: middle; margin-right: 6px; border-radius: 6px; }
+
+/* ── 숙제: 안 한 건 주황, 한 건 초록 */
+.todo-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); margin-top: 14px; }
+.todo-sec { padding: 12px; border-radius: 14px; background: var(--input-bg); border: 1px solid var(--line); }
+.todo-sec .todo { padding: 6px 8px; border-radius: 10px; margin-top: 6px; border-bottom: none; }
+.todo.left { background: var(--accent-soft); }
+.todo.left .tick { border-color: var(--accent); }
+.todo.left .todo-main > .row span:first-child { font-weight: 700; }
+.todo.left .todo-main > .row span:last-child { color: var(--accent); font-weight: 700; }
+pre.raw { max-height: 300px; overflow: auto; background: var(--input-bg); padding: 10px; border-radius: 10px; font-size: 11px; white-space: pre-wrap; }
+
+/* ── 공지 */
+.notice { display: flex; gap: 10px; align-items: flex-start; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+.notice:last-child { border-bottom: none; }
+.notice a { font-weight: 600; color: var(--text); }
+.notice a:hover { color: var(--accent); }
+.notice.hot { background: color-mix(in srgb, var(--warn) 8%, transparent); border-radius: 10px; }
+
+/* ── 로그인 */
+body.logged-out nav { visibility: hidden; }
+.login { max-width: 380px; margin: 8vh auto 0; padding: 28px; }
+.login .brand { font-size: 20px; }
+code.invite { font-size: 18px; font-weight: 800; padding: 6px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); letter-spacing: 1px; }
+
+/* ── 앱 아이콘: 주황 테두리 + 라이트는 흰 바탕, 다크는 투명 바탕 (단풍잎이 주황 바탕에 묻혀서) */
+.brand .leaf { background: #fff; border: 2px solid var(--accent); }
+:root[data-theme="dark"] .brand .leaf { background: transparent; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand .leaf { background: transparent; }
+}

@@ -1,0 +1,51 @@
+/* 메뉴: 데스크톱 가로 / 앱 오른쪽 서랍 */
+/* ───────── 상단 메뉴: 데스크톱은 가로 메뉴, 앱(960px 이하)은 오른쪽 서랍 ───────── */
+.nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.drawer-head, .drawer-foot { display: none; }
+.menu-btn { display: none; font-size: 20px; line-height: 1; padding: 7px 12px; border-radius: 12px; }
+.menu-overlay { display: none; }
+#user-box { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); }
+#user-box .user-name { font-weight: 700; color: var(--text); }
+#user-box .user-role { font-size: 11px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+
+@media (max-width: 960px) {
+  /* 상단바: 앱 아이콘 ─── 로그인 정보 · 메뉴 */
+  .top { gap: 10px; padding: 10px 14px; backdrop-filter: none; background: var(--panel-solid); flex-wrap: nowrap; }
+  .brand { flex: 1; min-width: 0; }
+  .brand b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .top > .ver-chip, .top > .theme-btn { display: none; }
+  .menu-btn { display: inline-flex; }
+  body.logged-out .menu-btn, body.logged-out #user-box { display: none; }
+
+  /* 메뉴 서랍 */
+  nav {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 41;
+    width: min(72vw, 320px); padding: 14px 12px;
+    display: flex; flex-direction: column; flex-wrap: nowrap; gap: 10px;
+    background: var(--panel-solid); border-left: 1px solid var(--line);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, .18);
+    transform: translateX(105%); transition: transform .22s ease; overflow-y: auto;
+    visibility: visible;
+  }
+  body.menu-open nav { transform: none; }
+  body.menu-open .top { z-index: 50; }   /* 상단바(안의 서랍)를 어두운 가림막보다 위로 */
+  body.logged-out nav { display: none; }
+  .menu-overlay { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(15, 10, 8, .4);
+    opacity: 0; pointer-events: none; transition: opacity .2s; }
+  body.menu-open .menu-overlay { opacity: 1; pointer-events: auto; }
+  body.menu-open { overflow: hidden; }
+
+  .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 4px 10px; border-bottom: 1px solid var(--line); }
+  .drawer-user { font-size: 15px; }
+  .drawer-close { border: none; background: none; font-size: 18px; padding: 6px 10px; }
+  .nav-links { flex-direction: column; flex-wrap: nowrap; gap: 2px; flex: 1 0 auto; }
+  nav .nav-links a { padding: 11px 14px; border-radius: 12px; font-size: 15px; }
+  .drawer-foot { display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .drawer-ver { position: relative; padding: 10px 14px; border-radius: 12px; color: var(--text); font-weight: 600; }
+  .drawer-ver .new-dot { position: absolute; top: 10px; left: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--warn); }
+  .drawer-foot .theme-btn { width: 100%; justify-content: center; }
+  .drawer-logout { width: 100%; padding: 11px; font-weight: 700; }
+
+  main { padding: 16px 12px 70px; }
+  h2 { font-size: 21px; }
+}

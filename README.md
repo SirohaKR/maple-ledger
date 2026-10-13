@@ -1,0 +1,161 @@
+# 🍁 메이플 수익 장부 — Dart 버전 (maple-ledger-dart)
+
+보스 결정석 수익, 사냥 메소, 기타 수익, 강화 지출을 기록하는 길드원용 장부예요.
+파이썬(Flask) 버전 [maple-ledger](https://github.com/SirohaKR/maple-ledger)를 **Dart로 옮긴 것**이고, 앞으로 Flutter 앱을 붙이기 위해 서버·공용 계산·앱을 나눠 두었어요.
+
+- **DB는 파이썬 버전과 똑같은 구조**예요. 파이썬 버전의 `data/ledger.db`를 그대로 넣으면 이어서 써요(기록, 계정, 비밀번호, API 키 전부).
+- 달라진 점: 로그인 유지 방식이 바뀌어서(`sessions` 테이블) **바꾼 뒤 한 번만 다시 로그인**하면 돼요.
+- 웹 화면은 아직 파이썬 버전 화면을 그대로 써요(`server/web/`). Flutter 앱이 생기면 바뀌어요.
+
+## 구성
+
+```
+maple-ledger-dart/
+├─ pubspec.yaml            # 워크스페이스 (shared + server를 한 번에 관리)
+├─ Dockerfile              # NAS용 이미지 (실행 파일 하나 + 웹 화면, 약 22MB)
+├─ docker-compose.yml      # 5070 포트, ./data 폴더에 DB
+├─ shared/                 # 서버와 앱이 같이 쓰는 순수 계산 (DB·HTTP 없음)
+│  └─ lib/src/
+│     ├─ calc.dart         # 결정석 판매 한도, 사냥 수익, 기타 수익 분배
+│     ├─ costs.dart        # 스타포스·잠재능력 비용 공식, HEXA 재료표
+│     ├─ dates.dart        # 한국 시간, 주 시작(목요일), 날짜 문자열
+│     └─ meso.dart         # "15억 6,000만" ↔ 숫자
+└─ server/
+   ├─ bin/server.dart      # 시작점 (환경 변수 읽고 서버 + 백그라운드 작업 시작)
+   ├─ lib/app.dart         # 조립: 모든 기능의 테이블·API 주소를 모은다
+   ├─ lib/core/            # 기능과 상관없는 공통 도구
+   ├─ lib/nexon/           # 넥슨 오픈 API 클라이언트, 응답 캐시
+   ├─ lib/jobs/            # 1분마다 도는 자동 작업
+   ├─ lib/features/<기능>/ # 화면(탭) 하나 = 폴더 하나
+   ├─ web/                 # 지금 쓰는 웹 화면 (index.html + static/)
+   └─ CHANGELOG.md         # 업데이트 내역 초안 (관리자가 다듬어서 게시)
+```
+
+### 기능 폴더 안의 파일 이름 규칙
+
+화면(탭) 하나마다 폴더가 있고, 안의 파일은 역할별로 이름이 정해져 있어요.
+
+| 파일 | 하는 일 | 자바로 치면 |
+|---|---|---|
+| `<기능>_schema.dart` | 이 기능이 쓰는 DB 테이블 정의 | DDL / 엔티티 |
+| `<이름>_repository.dart` | DB 조회·저장 (SQL은 여기에만) | Repository / DAO |
+| `<이름>_service.dart` | 계산이나 넥슨 API를 여러 번 부르는 작업 | Service |
+| `<기능>_routes.dart` | API 주소와 요청 처리 | Controller |
+
+### 기능 폴더 목록
+
+| 폴더 | 화면 | 테이블 | 주요 내용 |
+|---|---|---|---|
+| `auth/` | 로그인 | `users`, `sessions` | 가입(초대 코드), 로그인(10분에 10번 실패하면 잠금), 세션 쿠키, 로그인 검사 미들웨어 |
+| `admin/` | 관리 | — | 사용자 목록, 초대 코드, 관리자 지정, 비밀번호 초기화, 삭제 |
+| `changelog/` | 업데이트 내역 | `changelog_posts` | `CHANGELOG.md` 초안 읽기, 게시·숨김 |
+| `settings/` | 설정 | `settings`, `user_settings`, `crystal_rules` | 개인 설정, API 키(끝 4자리만 보여줌), 결정석 판매 규칙 |
+| `bosses/` | 보스 가격표 | `bosses`, `boss_prices` | 보스·가격 이력, 기본 가격표(`bosses_seed.dart`) |
+| `characters/` | 캐릭터 | `characters`, `char_bosses` | 넥슨에서 불러오기, 이름으로 추가, 보스 프리셋 |
+| `week/` | 보스 기록 | `clears`, `boss_log` | 주간·월간 결정석 수익 계산(`week_service.dart`), 클리어 체크 |
+| `sync/` | (자동 체크) | `sync_days`, `sched_state` | 스케줄러 API로 잡은 보스 자동 체크(`sync_service.dart`) |
+| `todo/` | 숙제 | — | 자동 체크 때 받아 둔 스케줄러로 일일·주간 숙제 |
+| `hunts/` | 사냥 | `hunts` | 직접 입력, 타이머(시작 → 종료 → 저장) |
+| `incomes/` | 기타 수익 | `incomes` | 드랍·조각·부수입, 파티 분배, 개인 시세 |
+| `spend/` | 강화·지출 | `enhance_log`, `history_days`, `expenses` | 강화 기록 불러오기·비용 추정(`enhance_service.dart`), 직접 지출 |
+| `growth/` | 성장 | `char_daily`, `item_info` | HEXA·심볼·장비, 경험치·전투력 기록. `equipment_service.dart`는 강화·지출도 같이 씀 |
+| `notices/` | 공지 | `notices`, `notice_seen` | 넥슨 공지 감시 단어 알림 |
+| `stats/` | 대시보드 | — | 최근 N주 수익·지출 합계 (다른 기능 저장소를 모아 계산) |
+| `web/` | — | — | `web/index.html`과 정적 파일 보내기 |
+
+### 공통 폴더
+
+| 파일 | 내용 |
+|---|---|
+| `core/db.dart` | SQLite 연결과 `rows / one / scalar / exec / insert / tx` 도우미 |
+| `core/schema.dart` | 테이블 정의 모양(`Schema`)과 시작할 때 전부 만들기(`applySchemas`). 예전 DB에 없는 칸은 자동으로 추가 |
+| `core/http.dart` | JSON 응답, 요청 본문 읽기, 오류 → `{"error": ...}` 변환, 값 변환(`toInt`, `truthy` …) |
+| `core/context.dart` | 환경 변수 설정(`Config`), 서버 공용(`AppContext`), 요청한 사람(`req.ctx.user`) |
+| `core/passwords.dart` | 비밀번호 해시 — 파이썬(werkzeug)과 같은 형식이라 기존 비밀번호 그대로 로그인 |
+| `core/settings_store.dart` | 설정 읽기/쓰기 (사람별 키는 `user_settings`, 나머지는 `settings`) |
+| `nexon/nexon_client.dart` | 넥슨 오픈 API 호출 (주소마다 함수 하나) |
+| `nexon/api_cache.dart` | 장비·HEXA·심볼 응답을 DB에 30분 저장 (`api_cache`) |
+| `jobs/jobs.dart` | 1분마다: 자동 체크 주기 된 사람 체크, 새벽 3시 이후 하루 한 번 전날 스냅샷 + 최근 3일 강화 기록, 1시간마다 공지 확인 |
+
+계산 규칙(결정석 한도, 강화 비용 공식, HEXA, 자동 체크 매칭 등)은 파이썬 버전과 완전히 같아요. 자세한 설명은 파이썬 버전 README의 "수익 계산 규칙 / 강화 비용 추정 방식 / 보스 자동 체크 동작"을 보면 돼요.
+
+## 코드 읽는 법 (자바를 알면 금방 읽혀요)
+
+요청 흐름: **화면(`web/static/js/pages/*.js`) → 요청 → `*_routes.dart` → `*_service.dart`(있으면) → `*_repository.dart` → DB 또는 넥슨 API**
+
+- **문법은 자바와 거의 같아요.** 클래스, `final`, `int`, `String`, `List<int>`, `Map<String, Object?>`, `if/for/try` 다 같아요. 다른 점만:
+  - `String?`처럼 **`?`가 붙으면 null 가능**, 없으면 null 불가. `a ?? b`는 "a가 null이면 b".
+  - `=> 식`은 `{ return 식; }`의 줄임.
+  - `Future<T>` / `async` / `await`는 자바의 `CompletableFuture`를 기다리는 것과 같아요. 넥슨 API 호출처럼 시간이 걸리는 일에 붙어요.
+  - `'$name 님'`, `'${a + b}'`는 문자열 안에 값 넣기.
+  - `(int, String)` 같은 괄호 묶음은 레코드(값 몇 개를 한 번에 돌려주기).
+  - `[for (final x in list) x * 2]`는 리스트를 바로 만드는 문법(자바 stream map과 비슷).
+  - `_`로 시작하는 이름은 그 파일 안에서만 쓰는 것(private).
+- **API 하나를 찾고 싶을 때** → `features/*/_routes.dart`의 `register()`에 주소가 다 모여 있어요. 예: `r.get('/api/hunts', _list)` → 같은 파일의 `_list` 함수.
+- **SQL을 보고 싶을 때** → `*_repository.dart`. SQL은 여기에만 있어요.
+- **계산을 바꾸고 싶을 때** → 숫자·공식은 `shared/lib/src/costs.dart`, `calc.dart`. 결정석 주간 수익은 `features/week/week_service.dart`의 `computeWeek`.
+- **새 넥슨 API를 붙이고 싶을 때** → `nexon/nexon_client.dart`에 함수 하나 → 기능 폴더 routes에 주소 하나 → 화면 JS에서 호출.
+- **새 기능(탭)을 만들고 싶을 때** → `features/<새기능>/`에 schema·repository·routes 파일을 만들고 `lib/app.dart`의 `allSchemas`와 routes 목록에 한 줄씩 추가.
+- **DB를 직접 보고 싶을 때** → `data/ledger.db`를 [DB Browser for SQLite](https://sqlitebrowser.org/)로 열면 돼요(수정은 서버를 끄고).
+
+## PC에서 실행해 보기
+
+[Dart SDK](https://dart.dev/get-dart) 3.11 이상(Flutter를 깔았으면 이미 들어 있어요)이 필요해요.
+
+```bash
+dart pub get
+```
+
+```bash
+cd server && dart run bin/server.dart
+```
+
+`http://localhost:5000`으로 접속해요. DB는 `server/data/ledger.db`에 생겨요.
+환경 변수: `PORT`(5000), `DB_PATH`(data/ledger.db), `WEB_DIR`(web), `CHANGELOG_PATH`(CHANGELOG.md), `NEXON_BASE`(테스트용 가짜 넥슨 주소).
+
+검사: `dart analyze` (문제 0건이어야 해요).
+
+## NAS 배포 (Synology)
+
+NAS에서는 `git pull` + `docker compose up -d --build`만 하면 돼요. Dart SDK는 도커가 빌드할 때 알아서 받아서 쓰고, 최종 이미지에는 실행 파일 하나만 들어가요.
+
+### 처음 설치
+
+```bash
+cd /volume1/docker
+git clone https://github.com/SirohaKR/maple-ledger-dart.git
+cd maple-ledger-dart
+mkdir -p data
+docker compose up -d --build
+```
+
+### 파이썬 버전(5070)에서 바꾸기
+
+두 버전 모두 5070 포트를 쓰고 컨테이너 이름(`maple-ledger`)도 같아서, 파이썬 쪽을 먼저 멈추고 DB를 옮긴 뒤 켜요.
+
+```bash
+cd /volume1/docker/maple-ledger && docker compose down
+cp /volume1/docker/maple-ledger/data/ledger.db /volume1/docker/maple-ledger-dart/data/ledger.db
+cd /volume1/docker/maple-ledger-dart && docker compose up -d --build
+```
+
+- 파이썬 버전 폴더와 DB는 그대로 남아 있어서, 문제가 생기면 `docker compose down` 후 파이썬 폴더에서 `docker compose up -d`로 바로 돌아갈 수 있어요.
+- 바꾼 뒤에는 다들 **한 번만 다시 로그인**해야 해요(아이디·비밀번호는 그대로).
+
+### 그 다음
+
+- 업데이트: `git pull && docker compose up -d --build`
+- 로그: `docker logs -f maple-ledger`
+- 백업: `data/ledger.db` 복사 (Hyper Backup에 `data/` 폴더 포함)
+
+## 파이썬 버전과 똑같이 동작하는지 확인한 방법
+
+실제 `ledger.db` 복사본 두 개에 파이썬 서버와 Dart 서버를 각각 붙여서 같은 요청을 보내고 응답을 비교했어요(2026-10-13).
+
+- 조회 API 22개, 추가·수정·삭제 32단계 → 응답이 모두 같음
+- 가짜 넥슨 서버로 자동 체크, 강화 기록 불러오기, 성장(HEXA·심볼·장비, 지난 기록 채우기), 공지 확인, 캐릭터 추가·갱신 → 모두 같음
+- 웹 화면 12개 탭이 Dart 서버에서 오류 없이 열림, 도커 이미지에서 SQLite·넥슨 HTTPS 연결 확인
+
+## 하지 않는 것
+
+- 자동 사냥, 매크로, 게임 메모리 읽기는 넥슨 약관 위반이라 넣지 않아요. 메소는 직접 입력해요.

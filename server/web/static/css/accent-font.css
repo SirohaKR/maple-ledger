@@ -1,0 +1,6 @@
+/* 메이플스토리체를 쓰는 곳 (제목·큰 금액·타이머) */
+/* ── 메이플스토리체: 제목·로고·큰 금액·타이머처럼 눈에 띄어야 하는 곳만 */
+.brand b, h2, .tile .value, .timer, .tp-name, .login .brand, .char-name, code.invite {
+  font-family: "Maplestory", "Pretendard Variable", Pretendard, "Malgun Gothic", sans-serif;
+  font-weight: 700; letter-spacing: 0;
+}

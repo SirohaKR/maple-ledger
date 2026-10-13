@@ -1,0 +1,11 @@
+services:
+  maple-ledger:
+    build: .
+    container_name: maple-ledger
+    restart: unless-stopped
+    ports:
+      - "5070:5000"
+    volumes:
+      # SQLite DB (기록·가격표·API 키·로그인). 컨테이너를 다시 빌드해도 남는다.
+      # 파이썬 버전의 data/ledger.db를 그대로 넣으면 이어서 쓴다.
+      - ./data:/app/data

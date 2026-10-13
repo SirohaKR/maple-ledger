@@ -1,0 +1,16 @@
+/* 메이플 수익 장부 — 스타일 모음
+   HTML에는 이 파일 하나만 넣어요. 아래 순서대로 불러오고, 뒤에 있는 파일이 앞의 것을 덮어써요.
+   새 스타일 파일을 만들면 여기에 @import 한 줄 추가. */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+@import url("base.css");  /* 글꼴(메이플스토리체) · 라이트/다크 색 변수 · 기본 바탕 */
+@import url("header.css");  /* 상단바 · 로고 · 가로 메뉴 · 테마 버튼 */
+@import url("layout.css");  /* 본문 폭 · 제목 · 정렬 도구 · 카드 · 숫자 타일 */
+@import url("forms.css");  /* 버튼 · 입력칸 */
+@import url("tables.css");  /* 표 · 작은 꼬리표(pill) */
+@import url("components.css");  /* 캐릭터 이미지 · 탭 · 알림 · 모달 · 그래프 · 사냥 타이머 · 입력 격자 */
+@import url("widgets.css");  /* 진행 막대 · 숙제 · 장비/스킬 아이콘 · 공지 · 로그인 · 앱 아이콘 */
+@import url("tooltip.css");  /* 장비 툴팁 */
+@import url("accent-font.css");  /* 메이플스토리체를 쓰는 곳 (제목·큰 금액·타이머) */
+@import url("changelog.css");  /* 버전 표시 · 업데이트 내역 · 로고 링크 */
+@import url("menu.css");  /* 메뉴: 데스크톱 가로 / 앱 오른쪽 서랍 */
+@import url("mobile.css");  /* 앱(좁은 화면): 표를 카드로 · 타일·폼 크기 */

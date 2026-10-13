@@ -1,0 +1,8 @@
+# 메이플 수익 장부 — Dart 작업 공간 (서버 · 앱 · 공용 코드를 한 번에 관리)
+name: maple_ledger_workspace
+publish_to: none
+environment:
+  sdk: ^3.11.0
+workspace:
+  - shared
+  - server

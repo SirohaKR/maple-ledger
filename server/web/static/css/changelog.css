@@ -1,0 +1,27 @@
+/* 버전 표시 · 업데이트 내역 · 로고 링크 */
+/* ── 버전 표시 / 업데이트 내역 */
+.ver-chip { position: relative; font-size: 12px; font-weight: 700; color: var(--muted); padding: 4px 10px;
+  border: 1px solid var(--line); border-radius: 999px; text-decoration: none; }
+.ver-chip:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+.ver-chip .new-dot { position: absolute; top: -2px; right: -2px; width: 9px; height: 9px; border-radius: 50%; background: var(--warn); }
+body.logged-out .ver-chip { display: none; }
+.cl-title { margin: 0; font-family: "Maplestory", "Pretendard Variable", Pretendard, sans-serif; font-size: 20px; color: var(--accent); }
+.cl-sub { margin: 14px 0 4px; font-size: 14px; }
+.cl-list { margin: 6px 0 0; padding-left: 20px; line-height: 1.75; }
+.cl-list li + li { margin-top: 2px; }
+.cl-ver code { font-size: 12px; padding: 1px 6px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
+input[readonly] { background: var(--accent-soft); color: var(--accent); font-weight: 700; cursor: default; }
+
+/* ── 로고 = 대시보드로 가는 링크 */
+a.brand, a.brand:hover { text-decoration: none; color: inherit; }
+a.brand:hover .leaf { transform: rotate(-12deg); }
+.brand .leaf { transition: transform .2s; }
+
+/* ── 업데이트 내역 관리 (관리자) */
+.cl-admin { display: grid; gap: 12px; }
+.cl-item { padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--input-bg); }
+.cl-item textarea { width: 100%; margin-top: 8px; resize: vertical; line-height: 1.6; font-size: 13px; }
+.cl-preview { margin-top: 10px; }
+.ver-chip[hidden] { display: none; }
+
+td { word-break: keep-all; }

@@ -1,0 +1,83 @@
+/* 글꼴(메이플스토리체) · 라이트/다크 색 변수 · 기본 바탕 */
+/* ── 글꼴: 본문 = Pretendard (index.html에서 불러옴), 제목·큰 숫자 = 메이플스토리체 (눈누, jsdelivr CDN)
+   swap: 글꼴을 받는 동안 기본 글꼴로 먼저 보여주고 받으면 바꾼다 */
+@font-face { font-family: 'Maplestory'; font-weight: 300; font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff'); }
+@font-face { font-family: 'Maplestory'; font-weight: 700; font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff'); }
+
+/* 메이플 수익 장부 — 따뜻한 단풍 테마 (라이트) / 밤하늘 테마 (다크) */
+:root {
+  --bg: #fff7ef;
+  --panel: rgba(255, 255, 255, .86);
+  --panel-solid: #ffffff;
+  --line: #f1e3d6;
+  --text: #3a2f28;
+  --muted: #9a8a7e;
+  --accent: #ff7a3d;
+  --accent-2: #ff4f7b;
+  --accent-soft: #ffeadc;
+  --boss: #ff7a3d;
+  --hunt: #3aa6f0;
+  --etc: #23b89d;
+  --ok: #23b89d;
+  --warn: #e5484d;
+  --shadow: 0 6px 24px rgba(180, 110, 60, .10), 0 1px 3px rgba(180, 110, 60, .08);
+  --radius: 18px;
+  --input-bg: #fffaf5;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #14121c;
+  --panel: rgba(34, 30, 46, .88);
+  --panel-solid: #221e2e;
+  --line: #34304a;
+  --text: #f1ecf7;
+  --muted: #9d95b3;
+  --accent: #ff9a52;
+  --accent-2: #ff6b8f;
+  --accent-soft: #3a2a2c;
+  --boss: #ff9a52;
+  --hunt: #5cb8ff;
+  --etc: #3fd6b5;
+  --ok: #3fd6b5;
+  --warn: #ff6b6b;
+  --shadow: 0 8px 30px rgba(0, 0, 0, .35);
+  --input-bg: #1a1724;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14121c;
+    --bg-glow-1: rgba(255, 122, 61, .14);
+    --bg-glow-2: rgba(120, 90, 255, .18);
+    --panel: rgba(34, 30, 46, .88);
+    --panel-solid: #221e2e;
+    --line: #34304a;
+    --text: #f1ecf7;
+    --muted: #9d95b3;
+    --accent: #ff9a52;
+    --accent-2: #ff6b8f;
+    --accent-soft: #3a2a2c;
+    --boss: #ff9a52;
+    --hunt: #5cb8ff;
+    --etc: #3fd6b5;
+    --ok: #3fd6b5;
+    --warn: #ff6b6b;
+    --shadow: 0 8px 30px rgba(0, 0, 0, .35);
+    --input-bg: #1a1724;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0; min-height: 100vh;
+  color: var(--text);
+  background: var(--bg);
+  font: 14px/1.55 "Pretendard Variable", Pretendard, "Malgun Gothic", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; font-weight: 600; }
+a:hover { text-decoration: underline; }

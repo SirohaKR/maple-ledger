@@ -1,0 +1,25 @@
+/* 본문 폭 · 제목 · 정렬 도구 · 카드 · 숫자 타일 */
+main { max-width: 1240px; margin: 0 auto; padding: 24px 16px 90px; }
+h2 { margin: 0 0 14px; font-size: 24px; font-weight: 800; letter-spacing: -.5px; }
+h3 { margin: 0 0 10px; font-size: 15px; font-weight: 700; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.spread { justify-content: space-between; }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.tiles { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 16px; }
+
+.card {
+  background: var(--panel); backdrop-filter: blur(10px);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; margin-bottom: 16px; box-shadow: var(--shadow);
+}
+.tile { position: relative; border-left: 4px solid var(--tile-c, var(--line)); }
+.tile .label { color: var(--muted); font-size: 12px; font-weight: 600; }
+.tile .value { font-size: 26px; font-weight: 800; letter-spacing: -.5px; font-variant-numeric: tabular-nums; }
+.tile.boss { --tile-c: var(--boss); }
+.tile.hunt { --tile-c: var(--hunt); }
+.tile.etc { --tile-c: var(--etc); }
+.tile.hero { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tile.hero .label { color: rgba(255,255,255,.85); }

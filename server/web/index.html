@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>메이플 수익 장부</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+  <!-- 저장된 테마를 먼저 적용해서 깜빡임 방지 -->
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <!-- 스타일은 css/common.css 하나만 넣어요 (나머지 css 파일들은 common.css가 불러옴) -->
+  <link rel="stylesheet" href="/static/css/common.css?v={{v}}">
+</head>
+<body class="logged-out">
+  <header class="top">
+    <a class="brand" href="#dash" title="대시보드로"><span class="leaf">🍁</span><b>메이플 수익 장부</b></a>
+    <nav id="nav" aria-label="메뉴">
+      <div class="drawer-head"><span id="drawer-user" class="drawer-user"></span>
+        <button class="drawer-close" id="menu-close" type="button" aria-label="메뉴 닫기">✕</button></div>
+      <div class="nav-links">
+        <a href="#dash">대시보드</a>
+        <a href="#week">보스 기록</a>
+        <a href="#todo">숙제</a>
+        <a href="#hunts">사냥</a>
+        <a href="#incomes">기타 수익</a>
+        <a href="#spend">강화·지출</a>
+        <a href="#growth">성장</a>
+        <a href="#notices">공지</a>
+        <a href="#chars">캐릭터</a>
+        <a href="#bosses">보스 가격표</a>
+        <a href="#settings">설정</a>
+        <a href="#admin" class="admin-only" hidden>관리</a>
+      </div>
+      <div class="drawer-foot">
+        <a href="#changelog" class="drawer-ver" id="drawer-ver">📝 업데이트 내역 <span id="drawer-ver-text"></span><i class="new-dot" hidden></i></a>
+        <button class="theme-btn" id="theme-btn2" type="button"></button>
+        <button class="danger drawer-logout" id="nav-logout" type="button">로그아웃</button>
+      </div>
+    </nav>
+    <a href="#changelog" id="ver-chip" class="ver-chip" title="업데이트 내역" hidden><span id="ver-text"></span><i class="new-dot" hidden></i></a>
+    <span id="user-box"></span>
+    <button class="theme-btn" id="theme-btn" title="테마 바꾸기"></button>
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+  </header>
+  <div class="menu-overlay" id="menu-overlay"></div>
+  <main id="view"></main>
+  <div id="toast" class="toast" hidden></div>
+  <div id="modal" class="modal" hidden><div class="modal-box" id="modal-box"></div></div>
+  <!-- 화면 코드: common(공통) → api(서버 요청) → pages(화면) → main(시작) 순서로 불러와요 -->
+  <script src="/static/js/common.js?v={{v}}"></script>
+  <script src="/static/js/api/common.js?v={{v}}"></script>
+  <script src="/static/js/api/dash.js?v={{v}}"></script>
+  <script src="/static/js/api/week.js?v={{v}}"></script>
+  <script src="/static/js/api/todo.js?v={{v}}"></script>
+  <script src="/static/js/api/hunts.js?v={{v}}"></script>
+  <script src="/static/js/api/incomes.js?v={{v}}"></script>
+  <script src="/static/js/api/spend.js?v={{v}}"></script>
+  <script src="/static/js/api/growth.js?v={{v}}"></script>
+  <script src="/static/js/api/notices.js?v={{v}}"></script>
+  <script src="/static/js/api/chars.js?v={{v}}"></script>
+  <script src="/static/js/api/bosses.js?v={{v}}"></script>
+  <script src="/static/js/api/settings.js?v={{v}}"></script>
+  <script src="/static/js/api/admin.js?v={{v}}"></script>
+  <script src="/static/js/pages/dash.js?v={{v}}"></script>
+  <script src="/static/js/pages/week.js?v={{v}}"></script>
+  <script src="/static/js/pages/todo.js?v={{v}}"></script>
+  <script src="/static/js/pages/hunts.js?v={{v}}"></script>
+  <script src="/static/js/pages/incomes.js?v={{v}}"></script>
+  <script src="/static/js/pages/spend.js?v={{v}}"></script>
+  <script src="/static/js/pages/growth.js?v={{v}}"></script>
+  <script src="/static/js/pages/notices.js?v={{v}}"></script>
+  <script src="/static/js/pages/chars.js?v={{v}}"></script>
+  <script src="/static/js/pages/bosses.js?v={{v}}"></script>
+  <script src="/static/js/pages/settings.js?v={{v}}"></script>
+  <script src="/static/js/pages/changelog.js?v={{v}}"></script>
+  <script src="/static/js/pages/admin.js?v={{v}}"></script>
+  <script src="/static/js/main.js?v={{v}}"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+/* 상단바 · 로고 · 가로 메뉴 · 테마 버튼 */
+/* 상단바 */
+.top {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+  padding: 12px 24px;
+  background: color-mix(in srgb, var(--panel-solid) 78%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 800; font-size: 17px; letter-spacing: -.3px;
+}
+.brand .leaf {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px;
+  background: var(--accent); font-size: 18px;
+}
+.brand b { color: var(--accent); }
+nav { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+nav a {
+  padding: 7px 14px; border-radius: 999px; font-weight: 600;
+  color: var(--muted); transition: background .15s, color .15s;
+}
+nav a:hover { color: var(--text); background: var(--accent-soft); text-decoration: none; }
+nav a.on { background: var(--accent); color: #fff; }
+.theme-btn {
+  border-radius: 999px; padding: 7px 12px; font-weight: 600;
+  display: inline-flex; gap: 6px; align-items: center;
+}

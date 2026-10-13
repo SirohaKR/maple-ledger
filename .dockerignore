@@ -1,0 +1,7 @@
+.git
+**/.dart_tool
+**/build
+data
+app
+*.md
+!server/CHANGELOG.md

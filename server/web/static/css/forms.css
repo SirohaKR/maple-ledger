@@ -1,0 +1,29 @@
+/* 버튼 · 입력칸 */
+/* 폼 */
+button, .btn {
+  font: inherit; cursor: pointer;
+  padding: 7px 14px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--panel-solid); color: var(--text);
+  transition: transform .08s, border-color .15s, box-shadow .15s;
+}
+button:hover { border-color: var(--accent); }
+button:active { transform: translateY(1px); }
+button:disabled { opacity: .55; cursor: default; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+button.primary:hover { filter: brightness(1.06); }
+button.danger { color: var(--warn); }
+button.link { border: none; background: none; color: var(--accent); padding: 2px 6px; font-weight: 600; }
+button.link.danger { color: var(--warn); }
+input, select, textarea {
+  font: inherit; color: var(--text); background: var(--input-bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px;
+  transition: border-color .15s, box-shadow .15s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+input[type=number] { width: 80px; }
+input[type=checkbox] { accent-color: var(--accent); width: 16px; height: 16px; vertical-align: -3px; }
+input.meso { width: 160px; }
+label.field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); font-weight: 600; }

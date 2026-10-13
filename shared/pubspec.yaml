@@ -1,0 +1,6 @@
+# 서버와 앱이 같이 쓰는 코드 (데이터 모양 · 메소 표시 · 계산식 · 비용표)
+name: shared
+publish_to: none
+environment:
+  sdk: ^3.11.0
+resolution: workspace
