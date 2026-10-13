@@ -5,3 +5,5 @@ data
 app
 *.md
 !server/CHANGELOG.md
+docs
+private

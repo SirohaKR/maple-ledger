@@ -7,3 +7,6 @@ data/
 *.db-shm
 .idea/
 .vscode/
+
+# 개인 메모 (NAS 경로 등) — 이 PC에만
+private/
