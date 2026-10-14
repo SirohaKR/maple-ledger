@@ -14,12 +14,14 @@
   </g>
   <!-- 표지 윤기 (밝은 띠) -->
   <path d="M40 17h28c-9 3-18 9-25 18-2 3-5 3-5 0V20c0-2 1-3 2-3z" fill="#c4774a"/>
-  <!-- 단풍잎 -->
-  <g transform="translate(36.5 33) scale(.46)" stroke="#3d2418" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M50 4 58 20 68 13 65 35 78 26 82 33 95 31 88 47 97 55 73 66 77 76 53 70 52 74 48 74 47 70 23 76 27 66 3 55 12 47 5 31 18 33 22 26 35 35 32 13 42 20z" fill="#ff8a1f"/>
-    <path d="M50 96V70" fill="none"/>
-    <path d="M50 66V24M50 52 74 38M50 52 26 38" fill="none" stroke="#d9600f" stroke-width="5"/>
-    <path d="M42 26 36 22 37 32z" fill="#ffb055" stroke="none"/>
+  <!-- 단풍잎 (메이플스토리 아이템 단풍잎 모양: 기울어진 5갈래, 왼쪽 아래로 휜 줄기) -->
+  <g transform="translate(37 32) scale(.5)">
+    <path d="M48 64 Q36 80 14 95" fill="none" stroke="#3d2418" stroke-width="13" stroke-linecap="round"/>
+    <g fill="#3d2418" stroke="#3d2418" stroke-width="10" stroke-linejoin="round"><path d="M42.1 62.1 Q51.4 79.2 76.0 90.0 Q72.0 63.4 57.9 49.9 Z"/><path d="M54.8 67.6 Q77.1 63.0 96.0 37.0 Q64.3 31.9 45.2 44.4 Z"/><path d="M62.0 62.1 Q79.0 40.7 77.0 3.0 Q45.3 23.6 38.0 49.9 Z"/><path d="M54.1 44.2 Q34.8 32.9 4.0 40.0 Q23.8 64.7 45.9 67.8 Z"/><path d="M61.8 49.5 Q54.0 24.0 22.0 5.0 Q20.8 42.1 38.2 62.5 Z"/></g>
+    <path d="M48 64 Q36 80 14 95" fill="none" stroke="#c9481d" stroke-width="5" stroke-linecap="round"/>
+    <path d="M42.1 62.1 Q51.4 79.2 76.0 90.0 Q72.0 63.4 57.9 49.9 Z" fill="#e8436a"/><path d="M54.8 67.6 Q77.1 63.0 96.0 37.0 Q64.3 31.9 45.2 44.4 Z" fill="#f2502a"/><path d="M62.0 62.1 Q79.0 40.7 77.0 3.0 Q45.3 23.6 38.0 49.9 Z" fill="#f2502a"/><path d="M54.1 44.2 Q34.8 32.9 4.0 40.0 Q23.8 64.7 45.9 67.8 Z" fill="#ff8a1f"/><path d="M61.8 49.5 Q54.0 24.0 22.0 5.0 Q20.8 42.1 38.2 62.5 Z" fill="#ff8a1f"/>
+    <g fill="none" stroke="#b8321c" stroke-width="2.2" stroke-linecap="round"><path d="M50.0 56.0 L67.7 79.1"/><path d="M50.0 56.0 L81.3 43.1"/><path d="M50.0 56.0 L68.4 20.0"/><path d="M50.0 56.0 L18.7 45.1"/><path d="M50.0 56.0 L31.0 21.3"/></g>
+    <g fill="none" stroke="#ffc15a" stroke-width="2.4" stroke-linecap="round"><path d="M65.9 55.5 L80.0 47.7"/><path d="M63.5 42.9 L70.3 25.0"/><path d="M38.0 45.9 L22.7 42.5"/><path d="M46.9 37.8 L36.2 22.4"/></g>
   </g>
   <!-- 메소 동전 (뒤 작은 것 + 앞 큰 것) -->
   <g stroke="#3d2418" stroke-width="5" stroke-linejoin="round">
