@@ -44,7 +44,7 @@ function installGuideHtml() {
     body = `<p>아이폰·아이패드는 <b>Safari</b>에서 설치해요.</p><ol>
       ${step("아래(아이패드는 위)의 <b>공유 버튼</b>(네모에 위 화살표)을 눌러요")}
       ${step("<b>홈 화면에 추가</b>를 눌러요")}
-      ${step("오른쪽 위 <b>추가</b>를 누르면 홈 화면에 🍁 아이콘이 생겨요")}</ol>`;
+      ${step("오른쪽 위 <b>추가</b>를 누르면 홈 화면에 장부 아이콘이 생겨요")}</ol>`;
   } else if (!window.isSecureContext) {
     body = `<p>지금 주소(<code>${esc(location.host)}</code>)는 <b>https</b>가 아니라서 브라우저가 정식 설치를 막아요.
       관리자가 https 주소를 만들어 두면 이 버튼 한 번으로 설치돼요. 그 전에는 아래처럼 바로가기로 쓸 수 있어요.</p>

@@ -287,7 +287,7 @@ function showLogin(first = false, mode = first ? "signup" : "login") {
   const signup = mode === "signup";
   $("#view").innerHTML = `
     <div class="login card">
-      <div class="brand" style="justify-content:center;margin-bottom:6px"><span class="leaf">🍁</span><b>메이플 수익 장부</b></div>
+      <div class="brand" style="justify-content:center;margin-bottom:6px"><img class="brand-logo" src="/static/icons/logo.svg" alt=""><b>메이플 수익 장부</b></div>
       <p class="small muted" style="text-align:center">${first ? "첫 가입자가 <b>관리자</b>가 돼요. 기존 기록은 이 계정으로 옮겨져요." : signup ? "관리자에게 받은 <b>초대 코드</b>가 있어야 가입할 수 있어요." : "길드원 전용이에요."}</p>
       <form id="auth-form" class="form-grid" style="grid-template-columns:1fr">
         <label class="field">아이디<input id="au-name" autocomplete="username" required></label>

@@ -14,8 +14,8 @@ input[readonly] { background: var(--accent-soft); color: var(--accent); font-wei
 
 /* ── 로고 = 대시보드로 가는 링크 */
 a.brand, a.brand:hover { text-decoration: none; color: inherit; }
-a.brand:hover .leaf { transform: rotate(-12deg); }
-.brand .leaf { transition: transform .2s; }
+a.brand:hover .brand-logo { transform: rotate(-8deg); }
+.brand-logo { transition: transform .2s; }
 
 /* ── 업데이트 내역 관리 (관리자) */
 .cl-admin { display: grid; gap: 12px; }
